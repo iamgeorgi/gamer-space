@@ -1,5 +1,13 @@
 import useGames from "@/hooks/useGames";
-import { Card, SimpleGrid, Image, Text, Spinner } from "@chakra-ui/react";
+import {
+  Card,
+  SimpleGrid,
+  Image,
+  Text,
+  Spinner,
+  Badge,
+  HStack,
+} from "@chakra-ui/react";
 
 function GameGrid() {
   const { games, error, isLoading } = useGames();
@@ -12,7 +20,9 @@ function GameGrid() {
         <Card.Root key={game.id} maxW="sm" overflow="hidden">
           <Image src={game.background_image} alt={game.name} />
           <Card.Body gap="2">
-            <Card.Description>{game.metacritic}</Card.Description>
+            <HStack>
+              <Badge px="13px" py="5px" colorPalette="green">{game.metacritic}</Badge>
+            </HStack>
             <Text
               textStyle="2xl"
               fontWeight="medium"
