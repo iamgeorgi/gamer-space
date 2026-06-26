@@ -6,14 +6,12 @@ function ColorModeSwitch() {
 
   return (
     <HStack>
-      <Switch.Root
-        onCheckedChange={() => {
-          toggleColorMode();
-        }}
-      >
+      <Switch.Root checked={colorMode === "light"} onCheckedChange={toggleColorMode}>
         <Switch.HiddenInput />
         <Switch.Control />
-        <Switch.Label>{colorMode === 'dark' ? "Dark Mode" : "Light Mode"}</Switch.Label>
+        <Switch.Label>
+          {colorMode === "dark" ? "Dark Mode" : "Light Mode"}
+        </Switch.Label>
       </Switch.Root>
     </HStack>
   );
