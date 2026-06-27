@@ -1,4 +1,5 @@
 import useGames from "@/hooks/useGames";
+import type { GameCard } from "@/services/games-service";
 import {
   Card,
   SimpleGrid,
@@ -9,8 +10,12 @@ import {
   HStack,
 } from "@chakra-ui/react";
 
-function GameGrid() {
-  const { games, error, isLoading } = useGames();
+interface Props {
+    games?: GameCard[]
+}
+
+function GameGrid({ games }: Props) {
+  const { error, isLoading } = useGames();
 
   return (
     <SimpleGrid columns={{ base: 1, md: 2, xl: 3 }} gap={6}>

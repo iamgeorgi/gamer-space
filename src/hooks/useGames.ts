@@ -4,7 +4,7 @@ import { CanceledError } from "axios";
 import { useEffect, useState } from "react";
 
 function useGames() {
-  const [games, setGames] = useState<GameCard[]>();
+  const [games, setGames] = useState<GameCard[]>([]);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -40,7 +40,7 @@ function useGames() {
     return () => cancel();
   }, []);
 
-  return { games, error, isLoading };
+  return { games, error, isLoading, setGames };
 }
 
 export default useGames;

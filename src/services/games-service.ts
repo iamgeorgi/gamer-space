@@ -6,7 +6,7 @@ export interface Platform {
 }
 
 export interface PlatformEntities {
-    platform: Platform[];
+    platform: Platform;
 }
 
 export interface GameCard {
