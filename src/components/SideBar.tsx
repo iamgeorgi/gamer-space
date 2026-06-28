@@ -1,37 +1,32 @@
 import { Button, Heading, VStack, Image, Text } from "@chakra-ui/react";
-import cyberpunk from "../assets/cyberpunk_2077.jpg";
+import useGenres from "@/hooks/useGenres";
 
-function SideBar() {
+interface Props {
+  onGenreSelect: (id: number, queryName: string) => void;
+}
+
+function SideBar({ onGenreSelect }: Props) {
+  const { genres } = useGenres();
+
   return (
     <VStack align="start">
       <Heading size="3xl">Genres</Heading>
-      <Button variant="ghost" justifyContent="flex-start">
-        <Image
-          src={cyberpunk}
-          boxSize="40px"
-          borderRadius={8}
-          objectFit="cover"
-        />
-        <Text>Action</Text>
-      </Button>
-      <Button variant="ghost" justifyContent="flex-start">
-        <Image
-          src={cyberpunk}
-          boxSize="40px"
-          borderRadius={8}
-          objectFit="cover"
-        />
-        <Text>Adventure</Text>
-      </Button>
-      <Button variant="ghost" justifyContent="flex-start">
-        <Image
-          src={cyberpunk}
-          boxSize="40px"
-          borderRadius={8}
-          objectFit="cover"
-        />
-        <Text>Strategy</Text>
-      </Button>
+      {genres.map((genre) => (
+        <Button
+          key={genre.id}
+          variant="ghost"
+          justifyContent="flex-start"
+          onClick={() => onGenreSelect(genre.id, 'genres')}
+        >
+          <Image
+            src={genre.image}
+            boxSize="40px"
+            borderRadius={8}
+            objectFit="cover"
+          />
+          <Text>{genre.name}</Text>
+        </Button>
+      ))}
     </VStack>
   );
 }
