@@ -40,11 +40,11 @@ function useGames() {
       });
 
     return () => cancel();
-  }, []);
+  }, [queryParams]);
 
 
 
-  return { games, error, isLoading, setGames };
+  return { games, error, isLoading, setGames, queryParams, setQueryParams };
 }
 
 export default useGames;

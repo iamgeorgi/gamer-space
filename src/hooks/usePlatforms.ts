@@ -31,7 +31,6 @@ function usePlatforms() {
     const { request, cancel } = platformsService.getAll<PlatformResult>();
     request
       .then((res) => {
-        console.log(res.data.results);
         const platformsData: Platform[] = res.data.results
           .filter((platform) => supportedPlatformSlugs.has(platform.slug))
           .map((platform) => ({

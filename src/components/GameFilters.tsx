@@ -1,39 +1,32 @@
+import usePlatforms from "@/hooks/usePlatforms";
+import type { GameQuery } from "@/services/http-service";
 import { createListCollection, For, Portal, Select } from "@chakra-ui/react";
-
-const platformsList = createListCollection({
-  items: [
-    { label: "PC", value: "pc" },
-    { label: "PlayStation", value: "playstation" },
-    { label: "Xbox", value: "xbox" },
-    { label: "iOS", value: "ios" },
-    { label: "Android", value: "android" },
-    { label: "Apple Macintosh", value: "apple" },
-    { label: "Linux", value: "linux" },
-  ],
-});
 
 const orderByList = createListCollection({
   items: [
-    { label: "Relevance", value: "relevance" },
-    { label: "Date added", value: "date_added" },
+    { label: "Relevance", value: "updated" },
+    { label: "Date added", value: "added" },
     { label: "Name", value: "name" },
-    { label: "Release date", value: "release_date" },
-    { label: "Popularity", value: "popularity" },
-    { label: "Average rating", value: "average_rating" },
+    { label: "Release date", value: "created" },
+    { label: "Popularity", value: "metacritic" },
+    { label: "Average rating", value: "rating" },
   ],
 });
 
 interface Props {
-    onSelectCategory: (e: any, filter: any) => void;
+    queryParams: GameQuery,
+    setQueryParams: React.Dispatch<React.SetStateAction<GameQuery>>;
 }
 
-function GameFilters({ onSelectCategory }: Props) {
+function GameFilters({ queryParams, setQueryParams} : Props) {
+  const { platforms } = usePlatforms();
+  const platformsList = createListCollection({ items: platforms });
 
   return (
     <For
       each={[
-        { id: 1, name: "Platforms", list: platformsList },
-        { id: 2, name: "Order By:", list: orderByList },
+        { id: 1, name: "Platforms", queryName: 'platforms', list: platformsList },
+        { id: 2, name: "Order By:", queryName: 'ordering', list: orderByList },
       ]}
     >
       {(filter) => (
@@ -43,7 +36,7 @@ function GameFilters({ onSelectCategory }: Props) {
           variant="subtle"
           size="md"
           width="320px"
-          onValueChange={(e) => onSelectCategory(e, filter)}
+          onValueChange={(e) => setQueryParams({ ...queryParams, [filter.queryName]: e.value[0] })}
         >
           <Select.HiddenSelect />
           <Select.Control>
