@@ -3,43 +3,32 @@ import GameGrid from "./GameGrid";
 import GameFilters from "./GameFilters";
 import { useState } from "react";
 import useGames from "@/hooks/useGames";
+import usePlatforms from "@/hooks/usePlatforms";
 
 function Main() {
-  const [category, setCategory] = useState([
-    { name: "platforms", value: "" },
-    { name: "order_by:", value: "" },
-  ]);
+  const [category, setCategory] = useState<{name: string, value: string}>({ name: '', value: ''});
 
   const { games } = useGames();
+  const { platforms } = usePlatforms();
 
-  const isCategorySelected = category.some(item => item.value);
-  
-  const visibleGames = isCategorySelected
-  ? games.filter((game) =>
-      game.platforms.some((p) =>
-        p.platform.slug.includes(category[0].value)
-      )
-    )
-  : games;
+  const handleCategory = (e: any, filter: any) => {
+    console.log('e >>>', e);
+    console.log('filter >>>', filter);
+    setCategory({ name: filter.name, value: e.value[0] });
+  };
+
+  console.log(platforms);
 
   return (
     <>
       <Heading size="5xl">Games</Heading>
       {/* Platform Filter */}
       <HStack>
-        <GameFilters
-          onSelectCategory={(e, filter) => 
-            setCategory(
-              category.map((el) =>
-                el.name === filter.name ? { ...el, value: e.value[0] } : el,
-              ),
-            )
-          }
-        />
+        <GameFilters onSelectCategory={handleCategory} />
       </HStack>
 
       {/* Game Grid */}
-      <GameGrid games={visibleGames} />
+      <GameGrid games={games} />
     </>
   );
 }

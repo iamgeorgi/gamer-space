@@ -1,5 +1,6 @@
 import type { GameCard } from "@/services/games-service";
 import gamesService from "@/services/games-service";
+import type { GameQuery } from "@/services/http-service";
 import { CanceledError } from "axios";
 import { useEffect, useState } from "react";
 
@@ -7,10 +8,11 @@ function useGames() {
   const [games, setGames] = useState<GameCard[]>([]);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [queryParams, setQueryParams] = useState<GameQuery>({});
 
   useEffect(() => {
     setIsLoading(true);
-    const { request, cancel } = gamesService.getAll<GameCard>();
+    const { request, cancel } = gamesService.getAll<GameCard>(queryParams);
     request
       .then((res) => {
         const gamesCardData = res.data.results.map((game) => {
@@ -39,6 +41,8 @@ function useGames() {
 
     return () => cancel();
   }, []);
+
+
 
   return { games, error, isLoading, setGames };
 }

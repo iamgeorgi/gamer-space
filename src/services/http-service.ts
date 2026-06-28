@@ -7,6 +7,12 @@ export interface FetchResponse<T> {
   results: T[];
 }
 
+export interface GameQuery {
+  platform?: string;
+  genres?: string;
+  ordering?: string;
+}
+
 class HttpService {
   endpoint: string;
 
@@ -14,11 +20,12 @@ class HttpService {
     this.endpoint = endpoint;
   }
 
-  getAll<T>() {
+  getAll<T>(query?: GameQuery) {
     const controller = new AbortController();
 
     const request = apiClient.get<FetchResponse<T>>(this.endpoint, {
       signal: controller.signal,
+      params: query
     });
 
     return { request, cancel: () => controller.abort() };
