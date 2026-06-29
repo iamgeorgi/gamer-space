@@ -21,8 +21,8 @@ function useGames() {
             name: game.name,
             background_image: game.background_image,
             metacritic: game.metacritic,
-            platforms: [
-              ...game.platforms.map((platform) => {
+            parent_platforms: [
+              ...game.parent_platforms.map((platform) => {
                 return { ...platform };
               }),
             ],

@@ -9,6 +9,7 @@ import {
   Badge,
   HStack,
 } from "@chakra-ui/react";
+import PlatformIconList from "./PlatformIconList";
 
 interface Props {
     games?: GameCard[]
@@ -36,6 +37,9 @@ function GameGrid({ games }: Props) {
             >
               {game.name}
             </Text>
+            <HStack>
+                <PlatformIconList platforms={game.parent_platforms?.map(p => p.platform)} />
+            </HStack>
           </Card.Body>
           <Card.Footer gap="2"></Card.Footer>
         </Card.Root>

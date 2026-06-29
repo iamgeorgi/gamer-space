@@ -2,11 +2,8 @@ import create from "./http-service";
 
 export interface Platform {
     id: number;
+    name: string;
     slug: string;
-}
-
-export interface PlatformEntities {
-    platform: Platform;
 }
 
 export interface GameCard {
@@ -14,7 +11,7 @@ export interface GameCard {
   name: string
   background_image: string;
   metacritic: number;
-  platforms: PlatformEntities[];
+  parent_platforms: { platform: Platform}[];
 }
 
 export default create('/games');
