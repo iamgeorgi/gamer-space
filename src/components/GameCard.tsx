@@ -9,7 +9,7 @@ interface Props {
 
 function GameCard({ game }: Props) {
   return (
-    <Card.Root key={game.id} maxW="sm" overflow="hidden">
+    <Card.Root key={game.id} maxW="sm">
       <Image src={getCroppedImageUrl(game.background_image)} alt={game.name} />
       <Card.Body gap="2">
         <HStack justifyContent="space-between">
