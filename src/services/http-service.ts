@@ -14,7 +14,7 @@ export interface GameQuery {
   search?: string;
 }
 
-class HttpService {
+export class HttpService {
   endpoint: string;
 
   constructor(endpoint: string) {

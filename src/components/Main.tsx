@@ -8,9 +8,11 @@ interface Props {
   games: GameCard[];
   queryParams: GameQuery;
   setQueryParams: React.Dispatch<React.SetStateAction<GameQuery>>;
+  error: string,
+  isLoading: boolean,
 }
 
-function Main({ games, queryParams, setQueryParams }: Props) {
+function Main({ games, queryParams, setQueryParams, error, isLoading }: Props) {
 
   return (
     <>
@@ -24,7 +26,7 @@ function Main({ games, queryParams, setQueryParams }: Props) {
       </HStack>
 
       {/* Game Grid */}
-      <GameGrid games={games} />
+      <GameGrid games={games} error={error} isLoading={isLoading} />
     </>
   );
 }

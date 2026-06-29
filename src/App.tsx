@@ -1,12 +1,12 @@
 import "./App.css";
-import { Box, Grid, GridItem, Heading } from "@chakra-ui/react";
+import { Box, Grid, GridItem } from "@chakra-ui/react";
 import NavBar from "./components/NavBar";
 import SideBar from "./components/SideBar";
 import Main from "./components/Main";
 import useGames from "./hooks/useGames";
 
 function App() {
-  const { games, queryParams, setQueryParams } = useGames();
+  const { data, queryParams, setQueryParams, error, isLoading } = useGames();
 
   function handleGenreSelect(id: number, queryName: string): void {
     setQueryParams({ ...queryParams, [queryName]: id })
@@ -37,7 +37,7 @@ function App() {
           </GridItem>
         </Box>
         <GridItem area="main">
-          <Main games={games} queryParams={queryParams} setQueryParams={setQueryParams} />
+          <Main games={data} queryParams={queryParams} setQueryParams={setQueryParams} error={error} isLoading={isLoading} />
         </GridItem>
       </Grid>
     </>
