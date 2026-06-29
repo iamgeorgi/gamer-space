@@ -11,6 +11,7 @@ export interface GameQuery {
   platforms?: string;
   genres?: string;
   ordering?: string;
+  search?: string;
 }
 
 class HttpService {

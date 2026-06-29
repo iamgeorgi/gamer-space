@@ -12,6 +12,10 @@ function App() {
     setQueryParams({ ...queryParams, [queryName]: id })
   }
 
+  function onSearch(value: string): void {
+    setQueryParams({ ...queryParams, search: value })
+  }
+
   return (
     <>
       <Grid
@@ -25,7 +29,7 @@ function App() {
         }}
       >
         <GridItem area="nav">
-          <NavBar />
+          <NavBar onSearch={onSearch} />
         </GridItem>
         <Box hideBelow="lg">
           <GridItem area="aside" padding="10px">

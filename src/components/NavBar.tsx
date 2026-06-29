@@ -4,11 +4,15 @@ import { ColorModeButton } from "@/components/ui/color-mode";
 import SearchBar from "./SearchBar";
 import ColorModeSwitch from "./ColorModeSwitch";
 
-const NavBar = () => {
+interface Props {
+    onSearch: (value: string) => void;
+}
+
+const NavBar = ({ onSearch }: Props) => {
   return (
     <HStack padding="10px">
       <Image src={logo} boxSize="60px" />
-      <SearchBar />
+      <SearchBar onSearch={onSearch} />
       <ColorModeSwitch />
     </HStack>
   );
