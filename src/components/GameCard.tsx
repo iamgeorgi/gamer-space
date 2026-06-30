@@ -2,6 +2,7 @@ import { Badge, Card, HStack, Image, Text } from "@chakra-ui/react";
 import PlatformIconList from "./PlatformIconList";
 import type { GameCard } from "@/services/games-service";
 import getCroppedImageUrl from "@/utils/image-url";
+import Emoji from "./Emoji";
 
 interface Props {
   game: GameCard;
@@ -21,7 +22,7 @@ function GameCard({ game }: Props) {
           </Badge>
         </HStack>
         <Text textStyle="2xl" fontWeight="medium" letterSpacing="tight" mt="2">
-          {game.name}
+          {game.name}<Emoji rating={game.rating_top}/>
         </Text>
       </Card.Body>
       <Card.Footer gap="2"></Card.Footer>
