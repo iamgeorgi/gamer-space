@@ -1,33 +1,39 @@
-import type { GameQuery, HttpService } from "@/services/http-service";
-import { CanceledError } from "axios";
+import type { HttpService } from "@/services/http-service";
+import { CanceledError, type AxiosRequestConfig } from "axios";
 import { useEffect, useState } from "react";
 
-function useData<T>(dataService: HttpService) {
+function useData<T>(
+  dataService: HttpService,
+  requestConfig?: AxiosRequestConfig,
+  deps?: any[],
+) {
   const [data, setData] = useState<T[]>([]);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [queryParams, setQueryParams] = useState<GameQuery>({});
 
-  useEffect(() => {
-    setIsLoading(true);
-    const { request, cancel } = dataService.getAll<T>(queryParams);
-    request
-      .then((res) => {
-        setData(res.data.results);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        if (error instanceof CanceledError) {
-          return;
-        }
-        setError(error.message);
-        setIsLoading(false);
-      });
+  useEffect(
+    () => {
+      setIsLoading(true);
+      const { request, cancel } = dataService.getAll<T>(requestConfig);
+      request
+        .then((res) => {
+          setData(res.data.results);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          if (error instanceof CanceledError) {
+            return;
+          }
+          setError(error.message);
+          setIsLoading(false);
+        });
 
-    return () => cancel();
-  }, [queryParams]);
+      return () => cancel();
+    },
+    deps ? [...deps] : [],
+  );
 
-  return { data, error, isLoading, queryParams, setQueryParams };
+  return { data, error, isLoading };
 }
 
 export default useData;

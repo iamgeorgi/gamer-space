@@ -2,31 +2,23 @@ import { Heading, HStack } from "@chakra-ui/react";
 import GameGrid from "./GameGrid";
 import GameFilters from "./GameFilters";
 import type { GameQuery } from "@/services/http-service";
-import type { GameCard } from "@/services/games-service";
 
 interface Props {
-  games: GameCard[];
   queryParams: GameQuery;
-  setQueryParams: React.Dispatch<React.SetStateAction<GameQuery>>;
-  error: string,
-  isLoading: boolean,
+  onFilterChange: (value: string, queryName: string) => void;
 }
 
-function Main({ games, queryParams, setQueryParams, error, isLoading }: Props) {
-
+function Main({ queryParams, onFilterChange }: Props) {
   return (
     <>
       <Heading size="5xl">Games</Heading>
       {/* Platform Filter */}
       <HStack>
-        <GameFilters
-          queryParams={queryParams}
-          setQueryParams={setQueryParams}
-        />
+        <GameFilters onFilterChange={onFilterChange} />
       </HStack>
 
       {/* Game Grid */}
-      <GameGrid games={games} error={error} isLoading={isLoading} />
+      <GameGrid queryParams={queryParams} />
     </>
   );
 }

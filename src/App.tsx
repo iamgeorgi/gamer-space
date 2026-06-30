@@ -3,15 +3,11 @@ import { Box, Grid, GridItem } from "@chakra-ui/react";
 import NavBar from "./components/NavBar";
 import SideBar from "./components/SideBar";
 import Main from "./components/Main";
-import useGames from "./hooks/useGames";
+import type { GameQuery } from "./services/http-service";
+import { useState } from "react";
 
 function App() {
-  const { data, queryParams, setQueryParams, error, isLoading } = useGames();
-
-
-  function onSearch(value: string): void {
-    setQueryParams({ ...queryParams, search: value })
-  }
+  const [queryParams, setQueryParams] = useState<GameQuery>({});
 
   return (
     <>
@@ -26,7 +22,7 @@ function App() {
         }}
       >
         <GridItem area="nav">
-          <NavBar onSearch={onSearch} />
+          <NavBar onSearch={(value) => setQueryParams({ ...queryParams, search: value })} />
         </GridItem>
         <Box hideBelow="lg">
           <GridItem area="aside" padding="10px">
@@ -34,7 +30,7 @@ function App() {
           </GridItem>
         </Box>
         <GridItem area="main">
-          <Main games={data} queryParams={queryParams} setQueryParams={setQueryParams} error={error} isLoading={isLoading} />
+          <Main queryParams={queryParams} onFilterChange={(value, queryName) => setQueryParams({ ...queryParams, [queryName]: value })} />
         </GridItem>
       </Grid>
     </>

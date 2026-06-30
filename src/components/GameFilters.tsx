@@ -1,5 +1,4 @@
 import usePlatforms from "@/hooks/usePlatforms";
-import type { GameQuery } from "@/services/http-service";
 import { createListCollection, For, Portal, Select } from "@chakra-ui/react";
 
 const orderByList = createListCollection({
@@ -14,19 +13,18 @@ const orderByList = createListCollection({
 });
 
 interface Props {
-    queryParams: GameQuery,
-    setQueryParams: React.Dispatch<React.SetStateAction<GameQuery>>;
+    onFilterChange: (value: string, queryName: string) => void,
 }
 
-function GameFilters({ queryParams, setQueryParams} : Props) {
+function GameFilters({ onFilterChange } : Props) {
   const { platforms } = usePlatforms();
   const platformsList = createListCollection({ items: platforms });
 
   return (
     <For
       each={[
-        { id: 1, name: "Platforms", queryName: 'platforms', list: platformsList },
-        { id: 2, name: "Order By:", queryName: 'ordering', list: orderByList },
+        { id: 1, name: "Platforms", slug: 'platforms', list: platformsList },
+        { id: 2, name: "Order By:", slug: 'ordering', list: orderByList },
       ]}
     >
       {(filter) => (
@@ -36,7 +34,7 @@ function GameFilters({ queryParams, setQueryParams} : Props) {
           variant="subtle"
           size="md"
           width="320px"
-          onValueChange={(e) => setQueryParams({ ...queryParams, [filter.queryName]: e.value[0] })}
+          onValueChange={(value) => onFilterChange(value.value[0], filter.slug)}
         >
           <Select.HiddenSelect />
           <Select.Control>

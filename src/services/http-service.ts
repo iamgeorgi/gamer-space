@@ -1,3 +1,4 @@
+import type { AxiosRequestConfig } from "axios";
 import apiClient from "../services/api-client";
 
 export interface FetchResponse<T> {
@@ -21,12 +22,12 @@ export class HttpService {
     this.endpoint = endpoint;
   }
 
-  getAll<T>(query?: GameQuery) {
+  getAll<T>(requestConfig?: AxiosRequestConfig) {
     const controller = new AbortController();
 
     const request = apiClient.get<FetchResponse<T>>(this.endpoint, {
       signal: controller.signal,
-      params: query
+      ...requestConfig
     });
 
     return { request, cancel: () => controller.abort() };
