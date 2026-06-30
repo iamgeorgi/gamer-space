@@ -8,9 +8,6 @@ import useGames from "./hooks/useGames";
 function App() {
   const { data, queryParams, setQueryParams, error, isLoading } = useGames();
 
-  function handleGenreSelect(id: number, queryName: string): void {
-    setQueryParams({ ...queryParams, [queryName]: id })
-  }
 
   function onSearch(value: string): void {
     setQueryParams({ ...queryParams, search: value })
@@ -33,7 +30,7 @@ function App() {
         </GridItem>
         <Box hideBelow="lg">
           <GridItem area="aside" padding="10px">
-            <SideBar onGenreSelect={handleGenreSelect} />
+            <SideBar onGenreSelect={(id) => setQueryParams({ ...queryParams, genres: id })} />
           </GridItem>
         </Box>
         <GridItem area="main">

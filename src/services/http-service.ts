@@ -9,7 +9,7 @@ export interface FetchResponse<T> {
 
 export interface GameQuery {
   platforms?: string;
-  genres?: string;
+  genres?: number;
   ordering?: string;
   search?: string;
 }

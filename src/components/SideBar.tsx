@@ -2,24 +2,24 @@ import { Button, Heading, VStack, Image, Text } from "@chakra-ui/react";
 import useGenres from "@/hooks/useGenres";
 
 interface Props {
-  onGenreSelect: (id: number, queryName: string) => void;
+  onGenreSelect: (id: number) => void;
 }
 
 function SideBar({ onGenreSelect }: Props) {
-  const { genres } = useGenres();
+  const { data } = useGenres();
 
   return (
     <VStack align="start">
       <Heading size="3xl">Genres</Heading>
-      {genres.map((genre) => (
+      {data.map((genre) => (
         <Button
           key={genre.id}
           variant="ghost"
           justifyContent="flex-start"
-          onClick={() => onGenreSelect(genre.id, 'genres')}
+          onClick={() => onGenreSelect(genre.id)}
         >
           <Image
-            src={genre.image}
+            src={genre.image_background}
             boxSize="40px"
             borderRadius={8}
             objectFit="cover"
